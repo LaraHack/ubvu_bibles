@@ -28,7 +28,7 @@ $ ../cliopatria
 
 - Install the XMLRDF package: `?- cpack_install(xmlrdf).`
 
-- Load the conversion code:  `?- ['../ubvu_bibles/code/convert_ubvu_bibles].`
+- Load the conversion code:  `?- ['../ubvu_bibles/code/convert_ubvu_bibles'].`
 
 - Run the conversion: `?- convert_ubvu_bibles.`
 
