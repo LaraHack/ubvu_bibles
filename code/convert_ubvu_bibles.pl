@@ -62,7 +62,7 @@ read_prints([Row|Rows], [PrintDict|PrintList]) :-
 %%	get_info_row(+Row, -NaturalisID, -ScientificName)
 %
 %	Get the info needed from row.
-get_info_row(row(Id), Id).
+get_info_row(row(Id, _, _, _, _, _, _, _, _, _, _,  _, _, _, _, _,  _, _, _, _, _,  _, _, _, _, _,  _, _, _, _, _,  _, _, _, _, _,  _, _, _, _, _,  _, _, _, _, _,  _, _, _, _, _,  _, _, _, _, _,  _, _, _, _, _,  _, _, _, _, _,  _, _, _, _, _,  _, _, _, _, _,  _, _, _ ), Id).
 
 %%	assert(+ListObjectDicts)
 %
