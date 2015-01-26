@@ -1,0 +1,31 @@
+#cliopatria aliases
+run.pl
+config.pl
+debug.pl
+store.pl
+zlib.pl
+config.done
+server/config-enabled/010-packs.pl
+server/config-enabled/cluster_search.pl
+server/config-enabled/find_resource.pl
+server/config-enabled/media_cache.pl
+server/config-enabled/autocompletion.pl
+server/config-enabled/skos.pl
+server/daemon.pl
+
+#temp files
+*.pl~
+~$*
+
+#folders
+pl/
+data/
+server/RDF-store/
+out/
+/
+server/cache/
+server/cpack/
+
+# OS generated
+.DS_Store
+.DS_Store?
