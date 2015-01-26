@@ -24,13 +24,6 @@ user:file_search_path(data, .).
 
 :- rdf_register_ns(ore, 'http://www.openarchives.org/ore/terms/').
 :- rdf_register_ns(edm, 'http://www.europeana.eu/schemas/edm/').
-:- rdf_register_ns(aat, 'http://vocab.getty.edu/aat/').
-:- rdf_register_ns(ulan, 'http://vocab.getty.edu/ulan/').
-:- rdf_register_ns(nat, 'http://purl.org/collections/nl/naturalis/').
-:- rdf_register_ns(nats, 'http://purl.org/collections/nl/naturalis/schema#').
-:- rdf_register_ns(txn, 'http://lod.taxonconcept.org/ontology/txn.owl#').
-:- rdf_register_ns(birds, 'http://purl.org/collections/birds/').
-:- rdf_register_ns(dcterms, 'http://purl.org/dc/terms/').
 :- rdf_set_cache_options([ global_directory('cache/rdf'),
 			   create_global_directory(true)
 			 ]).
@@ -51,8 +44,8 @@ load_ontologies :-
 :- initialization
     load_ontologies.
 
-load_naturalis_koekkoek_csv(PrintList) :-
-    csv_read_file('Metadata Ornithologia Neerlandica platen Koekkoek.csv', Rows),
+load_bible_tsv(PrintList) :-
+    csv_read_file('export_bis.tsv', Rows),
     skip_row(Rows, Rows1),
     read_prints(Rows1, PrintList).
 
@@ -60,36 +53,8 @@ skip_row([_Row|Rows],Rows).
 
 read_prints([], []).
 read_prints([Row|Rows], [PrintDict|PrintList]) :-
-    get_info_row(Row,
-		 Id,
-		 NLName,
-		 ENName,
-		 ScientificName,
-		 NLDescription,
-		 ENDescription,
-		 ImageUrl,
-		 PublishedIn,
-		 Creator,
-		 ImageLicense,
-		 LicenseNote,
-		 Type,
-		 Source
-		),
-    PrintDict = print{
-		    id:Id,
-		    nl_name:NLName,
-		    en_name:ENName,
-		    scientific_name:ScientificName,
-		    nl_description:NLDescription,
-		    en_description:ENDescription,
-		    image_url:ImageUrl,
-		    published_in:PublishedIn,
-		    creator:Creator,
-		    image_license:ImageLicense,
-		    license_note:LicenseNote,
-		    type:Type,
-		    source:Source
-		     },
+    get_info_row(Row, Id),
+    PrintDict = print{id:Id},
     read_prints(Rows, PrintList).
 
 
@@ -97,24 +62,7 @@ read_prints([Row|Rows], [PrintDict|PrintList]) :-
 %%	get_info_row(+Row, -NaturalisID, -ScientificName)
 %
 %	Get the info needed from row.
-get_info_row(row(Id, _PlateOf, _By, NLName, ENName, ScientificName,
-		 NLDescription, ENDescription, ImageUrl, _W800, _JPG,
-		 PublishedIn, Creator, ImageLicense, LicenseNote, Type, Source
-		),
-	     Id,
-	     NLName,
-	     ENName,
-	     ScientificName,
-	     NLDescription,
-	     ENDescription,
-	     ImageUrl,
-	     PublishedIn,
-	     Creator,
-	     ImageLicense,
-	     LicenseNote,
-	     Type,
-	     Source
-	    ).
+get_info_row(row(Id), Id).
 
 %%	assert(+ListObjectDicts)
 %
@@ -149,8 +97,7 @@ assert_object(ObjectDict, AggregationIri, ObjectIri) :-
     assert_object_creator(Creator, ObjectIri),
     Type = ObjectDict.type,
     assert_object_type(Type, ObjectIri),
-    assert_object_subject(ObjectDict, ObjectIri),
-    debug(naturalis, 'Asserting object: ~p', [ObjectIri]).
+    debug(ubvu, 'Asserting object: ~p', [ObjectIri]).
 
 %%	assert_web_resource(+ObjectDict, +AggregationIri)
 %
@@ -159,7 +106,7 @@ assert_web_resource(ObjectDict, AggregationIri) :-
     WebResource = ObjectDict.image_url,
     rdf_assert(AggregationIri, edm:isShownBy, WebResource, naturalis_prints),
     rdf_assert(WebResource, rdf:type, edm:'WebResource', naturalis_prints),
-    debug(naturalis, 'Asserting view: ~p', [WebResource]).
+    debug(ubvu, 'Asserting view: ~p', [WebResource]).
 
 %%	assert_aggregation_data(+ObjectDict, +AggregationIri)
 %
@@ -169,7 +116,7 @@ assert_aggregation_data(ObjectDict, AggregationIri) :-
     Source = ObjectDict.source,
     rdf_assert(AggregationIri, edm:dataProvider, literal(Source), naturalis_prints),
     rdf_assert(AggregationIri, rdf:type, ore:'Aggregation', naturalis_prints),
-    debug(naturalis, 'Asserting source: ~p', [Source]).
+    debug(ubvu, 'Asserting source: ~p', [Source]).
 
 % TODO: Hardcoded the ulan id, should do a lookup instead.
 assert_object_creator('Koekkoek, M.A.', ObjectIri) :-
@@ -190,90 +137,13 @@ assert_object_type(drawing, ObjectIri) :-
 assert_object_type(Type, ObjectIri) :-
     rdf_assert(ObjectIri, dc:format, literal(Type), naturalis_prints).
 
-%%	assert_object_subject(ObjectDict, ObjectIri)
-%
-%	Assert the subject of the object (e.g. the depicted bird)
-assert_object_subject(ObjectDict, ObjectIri) :-
-    ScientificName = ObjectDict.scientific_name,
-    decompose_scientific_name(ScientificName, Genus, Species, SubSpecies),
-    downcase_atom(ScientificName, LowerName),
-    construct_bird_iri(SubSpecies, LowerName, BirdIri),
-    match(BirdIri, Match),
-    assert_missing_bird_names(BirdIri, ObjectDict, Match),
-    assert_subject_bird(Match, ObjectIri, BirdIri),
-    debug(naturalis, 'Match ~p ObjectIri ~p ScientificName ~p Genus ~p Species ~p SubSpecies ~p',
-	  [Match, ObjectIri, ScientificName, Genus, Species, SubSpecies]).
-
-%%	construct_bird_iri(+Subspecies, +ScientificName, -Iri)
-%
-%	Constructs a uri specific to the type (deducted by determining
-%	whether the subspecies is defined) and returns this type and the
-%	constructed URI
-construct_bird_iri(no_subspecies, ScientificName, Iri) :-
-    literal_to_id(['species-', ScientificName], birds, Iri),
-    !.
-
-construct_bird_iri(_, ScientificName, Iri) :-
-     literal_to_id(['subspecies-', ScientificName], birds, Iri).
-
-%%	assert_missing_bird_names(+SubSpecies, +BirdIri, +ObjectDict)
-%
-%	Add names of birds when not yet present and iri is matched to a
-%	resource in birds. TODO: how to properly add this while
-%	considering the source? Now adding it to birds..
-assert_missing_bird_names(_BirdIri, _ObjectDict, false) :-
-    !.
-assert_missing_bird_names(BirdIri, ObjectDict, true) :-
-    rdf_equal(Predicate, txn:commonName),
-    Graph = birds,
-    NLName = ObjectDict.nl_name,
-    assert_missing_info(BirdIri, Predicate, NLName, nl, Graph),
-    ENName = ObjectDict.en_name,
-    assert_missing_info(BirdIri, Predicate, ENName, en, Graph).
-
-%%	assert_missing_info(+Iri, +Predicate, +Value, +LanguageTag,
-%	+Graph)
-%
-%	Assert additional info in case it is not already present in the
-%	graph.
-assert_missing_info(Iri, Predicate, Value, LanguageTag, _) :-
-    rdf(Iri, Predicate, literal(lang(LanguageTag, _Value))),
-    debug(missing, 'Present: Iri ~p, Predicate ~p, Value ~p, LanguageTag, ~p',
-	  [Iri, Predicate, Value, LanguageTag]),
-    !.
-
-assert_missing_info(Iri, Predicate, Value, LanguageTag, Graph) :-
-    rdf_assert(Iri, Predicate, literal(lang(LanguageTag, Value)), Graph),
-    debug(missing, 'Asserting: Iri ~p, Predicate ~p, Value ~p, LanguageTag ~p, Graph ~p ',
-	  [Iri, _PredicateTEMP, Value, LanguageTag, Graph]).
-
-%%	match(+Iri, -Boolean
-%
-%	Returns true when Iri is present, false otherwise.
-match(Iri, true) :-
-    rdf(Iri, _, _),
-    !.
-
-match(Iri, false) :-
-    debug(no_match, 'No match: ~p', [Iri]).
-
-%%	assert_subject_bird(+Boolean, +ObjectIri, +BirdIri)
-%
-%	Assert a bird as a subject on the object whenever the Iri is
-%	present in the graph.
-assert_subject_bird(true, ObjectIri, BirdIri) :-
-    rdf_assert(ObjectIri, dc:subject, BirdIri, naturalis_prints),
-    !.
-
-assert_subject_bird(false, _ObjectIri, _BirdIri).
-
 %%	save_birds
 %
 %	Save the result relative to the =data= search path.
 save_prints :-
-    absolute_file_name(data('../naturalis/rdf/naturalis_koekkoek.ttl'),
+    absolute_file_name(data('../../../git/ubvu_bibles/rdf/ubvu_bibles.ttl'),
 		       File, [access(write)]),
-    rdf_save_turtle(File, [graph(naturalis_prints)]).
+    rdf_save_turtle(File, [graph(ubvu_bibles)]).
 
 %%	convert_naturalis_zangvogels
 %
@@ -283,6 +153,6 @@ save_prints :-
 %	  2. Add RDF statements.
 %	  3. Save the result.
 convert_ubvu_bibles :-
-    load_naturalis_koekkoek_csv(ObjectList),
+    load_bible_tsv(ObjectList),
     assert_objects(ObjectList),
     save_prints.
