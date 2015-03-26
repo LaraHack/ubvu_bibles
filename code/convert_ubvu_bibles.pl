@@ -27,6 +27,7 @@ user:file_search_path(data, .).
 :- rdf_register_ns(ore, 'http://www.openarchives.org/ore/terms/').
 :- rdf_register_ns(edm, 'http://www.europeana.eu/schemas/edm/').
 :- rdf_register_ns(ubvu, 'http://purl.org/collections/nl/ubvu/').
+:- rdf_register_ns(aat, 'http://vocab.getty.edu/aat/').
 :- rdf_set_cache_options([ global_directory('cache/rdf'),
 			   create_global_directory(true)
 			 ]).
@@ -65,7 +66,7 @@ read_prints([Row|Rows], [PrintDict|PrintList]) :-
 %%	get_info_row(+Row, -Title, -Id)
 %
 %	Get the info needed from row.
-get_info_row(row(Title, Id, _, _, _, ShownBy, HasView, _, _), Title, Id, ShownBy, HasView).
+get_info_row(row(Title, Id, _, _, _, HasView, ShownBy, _, _), Title, Id, ShownBy, HasView).
 
 %%	assert(+ListObjectDicts)
 %
@@ -107,15 +108,15 @@ assert_object(_ObjectDict, AggregationUri, ObjectUri) :-
 %
 %	Assert resources available on the web representing the object.
 assert_web_resource(ObjectDict, AggregationUri) :-
-    WebResource = ObjectDict.shown_by,
-    rdf_assert(AggregationUri, edm:isShownBy, WebResource, ubvu_prints),
-    rdf_assert(WebResource, rdf:type, edm:'WebResource', ubvu_prints),
-    HasView0 = ObjectDict.has_view,
-    atom_concat('http://imagebase.ubvu.vu.nl/utils/getfile/collection/bis/id/', HasView0, HasView),
+    ShownBy0 = ObjectDict.shown_by,
+    atom_concat('http://imagebase.ubvu.vu.nl/utils/getfile/collection/bis/id/', ShownBy0, ShownBy),
+    rdf_assert(AggregationUri, edm:isShownBy, ShownBy, ubvu_prints),
+    rdf_assert(ShownBy, rdf:type, edm:'WebResource', ubvu_prints),
+    HasView = ObjectDict.has_view,
     rdf_assert(AggregationUri, edm:hasView, HasView, ubvu_prints),
-    rdf_assert(WebResource, rdf:type, edm:'WebResource', ubvu_prints),
+    rdf_assert(HasView, rdf:type, edm:'WebResource', ubvu_prints),
 
-    debug(ubvu, 'Asserting view: ~p', [WebResource]).
+    debug(ubvu, 'Asserting view: ~p', [HasView]).
 
 %%	assert_aggregation_data(+ObjectDict, +AggregationIri)
 %
@@ -128,14 +129,14 @@ assert_aggregation_data(_ObjectDict, AggregationUri) :-
     debug(ubvu, 'Asserting source: ~p', [Source]).
 
 % TODO: Hardcoded the ulan id, should do a lookup instead.
-assert_object_creator('Koekkoek, M.A.', ObjectUri) :-
-    rdf_assert(ObjectUri, dc:creator, literal('Koekkoek, M.A.'), ubvu_prints),
-    rdf_assert(ObjectUri, dcterms:creator, ulan:'500020715', ubvu_prints),
-    rdf_assert(ulan:'500020715', rdf:type, edm:'Agent', ubvu_prints),
-    !.
+%assert_object_creator('Koekkoek, M.A.', ObjectUri) :-
+ %   rdf_assert(ObjectUri, dc:creator, literal('Koekkoek, M.A.'), ubvu_prints),
+  %  rdf_assert(ObjectUri, dcterms:creator, ulan:'500020715', ubvu_prints),
+   % rdf_assert(ulan:'500020715', rdf:type, edm:'Agent', ubvu_prints),
+    %!.
 
-assert_object_creator(Creator, ObjectUri) :-
-    rdf_assert(ObjectUri, dc:creator, literal(Creator), ubvu_prints).
+%assert_object_creator(Creator, ObjectUri) :-
+ %   rdf_assert(ObjectUri, dc:creator, literal(Creator), ubvu_prints).
 
 
 assert_object_type(drawing, ObjectUri) :-
