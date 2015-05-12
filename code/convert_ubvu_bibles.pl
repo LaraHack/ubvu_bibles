@@ -49,7 +49,7 @@ load_ontologies :-
     load_ontologies.
 
 load_prints_tsv(PrintList) :-
-    csv_read_file('individual_prints.tsv', Rows),
+    csv_read_file('../git/ubvu_bibles/source/individual_prints.tsv', Rows),
     skip_row(Rows, Rows1),
     read_prints(Rows1, PrintList).
 
