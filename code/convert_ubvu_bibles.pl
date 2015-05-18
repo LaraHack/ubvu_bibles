@@ -57,8 +57,8 @@ skip_row([_Row|Rows],Rows).
 
 read_prints([], []).
 read_prints([Row|Rows], [PrintDict|PrintList]) :-
-    get_info_row(Row, Title, Id, ShownBy, HasView),
-    PrintDict = print{title:Title, id:Id, shown_by: ShownBy, has_view: HasView},
+    get_info_row(Row, Title, Id, ShownBy, HasView, PageType),
+    PrintDict = print{title:Title, id:Id, shown_by: ShownBy, has_view: HasView, page_type: PageType},
     read_prints(Rows, PrintList).
 
 
@@ -66,7 +66,7 @@ read_prints([Row|Rows], [PrintDict|PrintList]) :-
 %%	get_info_row(+Row, -Title, -Id)
 %
 %	Get the info needed from row.
-get_info_row(row(Title, Id, _, _, _, HasView, ShownBy, _, _), Title, Id, ShownBy, HasView).
+get_info_row(row(Title, Id, _, _, _, HasView, ShownBy, _, _, PageType), Title, Id, ShownBy, HasView, PageType).
 
 %%	assert(+ListObjectDicts)
 %
