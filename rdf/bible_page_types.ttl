@@ -29,3 +29,45 @@ ubvuv:EmptyPage
 	skos:prefLabel "Empty page"@en ;
 	skos:note "Lege pagina"@nl ;
 	skos:inScheme ubvuv:UBVUConceptScheme .
+
+ubvuv:OneIllustrationPage
+	a skos:Concept ;
+	skos:prefLabel "Één grote illustratie op pagina"@nl ;
+	skos:prefLabel "One big illustration on page"@en ;
+	skos:note "Pagina met één grote illustratie"@nl ;
+	skos:inScheme ubvuv:UBVUConceptScheme .
+
+ubvuv:TwoIllustrationsPage
+	a skos:Concept ;
+	skos:prefLabel "Twee illustraties op pagina"@nl ;
+	skos:prefLabel "Two illustrations on page"@en ;
+	skos:note "Pagina met twee illustraties"@nl ;
+	skos:inScheme ubvuv:UBVUConceptScheme .
+
+ubvuv:PartialIllustrationPage
+	a skos:Concept ;
+	skos:prefLabel "Gedeeltijke illustratie op pagina"@nl ;
+	skos:prefLabel "Partial illustration on page"@en ;
+	skos:note "Pagina met een deel van een illustratie die is afgedrukt op meerdere pagina’s"@nl ;
+	skos:inScheme ubvuv:UBVUConceptScheme .
+
+ubvuv:TextAndIllustrationPage
+	a skos:Concept ;
+	skos:prefLabel "Kleine illustraties en tekst op pagina"@nl ;
+	skos:prefLabel "Small illustrations and text on page"@en ;
+	skos:note "Pagina met tekst en kleine illustraties"@nl ;
+	skos:inScheme ubvuv:UBVUConceptScheme .
+
+ubvuv:MiniatureAndTextPage
+	a skos:Concept ;
+	skos:prefLabel "Miniaturen en tekst op pagina"@nl ;
+	skos:prefLabel "Miniatures and text on page"@en ;
+	skos:note "Pagina met tekst en miniaturen"@nl ;
+	skos:inScheme ubvuv:UBVUConceptScheme .
+
+ubvuv:TextPage
+	a skos:Concept ;
+	skos:prefLabel "Tekst op pagina"@nl ;
+	skos:prefLabel "Text on page"@en ;
+	skos:note "Pagina met tekst"@nl ;
+	skos:inScheme ubvuv:UBVUConceptScheme .
