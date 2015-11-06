@@ -6,8 +6,8 @@ ubvuv:Page
 	a skos:Concept ;
 	skos:prefLabel "Pagina"@nl ;
 	skos:prefLabel "Page"@en ;
-	skos:definition "Pagina in een publicatie"@nl ;
-	skos:definition "Page in a publication"@en ;
+	skos:definition "Pagina"@nl ;
+	skos:definition "Page"@en ;
 	skos:inScheme ubvuv:UBVUConceptScheme .
 
 ubvuv:IllustratedPage
@@ -16,6 +16,7 @@ ubvuv:IllustratedPage
 	skos:prefLabel "Illustrated page"@en ;
 	skos:definition "Pagina met daarop illustraties"@nl ;
 	skos:definition "Pages that contain illustrations"@en ;
+	skos:broader ubvuv:Page ;
 	skos:inScheme ubvuv:UBVUConceptScheme .
 
 ubvuv:TextPage
@@ -24,6 +25,7 @@ ubvuv:TextPage
 	skos:prefLabel "Text on page"@en ;
 	skos:definition "Pagina met tekst"@nl ;
 	skos:definition "Page that contains text"@en ;
+	skos:broader ubvuv:Page ;
 	skos:inScheme ubvuv:UBVUConceptScheme .
 
 ubvuv:EmptyPage
@@ -32,14 +34,16 @@ ubvuv:EmptyPage
 	skos:prefLabel "Empty page"@en ;
 	skos:definition "Pagina zonder illustraties of tekst"@nl ;
 	skos:definition "Page that contains illustrations nor text"@en ;
+	skos:broader ubvuv:Page ;
 	skos:inScheme ubvuv:UBVUConceptScheme .
 
-ubvuv:OneIllustrationPage
+ubvuv:FullPageIllustration
 	a skos:Concept ;
-	skos:prefLabel "Één illustratie op pagina"@nl ;
-	skos:prefLabel "One illustration on page"@en ;
+	skos:prefLabel "Paginavullende illustratie"@nl ;
+	skos:prefLabel "Full page illustration"@en ;
 	skos:definition "Paginavullende illustratie"@nl ;
-	skos:definition "Page with one illustration"@en ;
+	skos:definition "Full page illustration"@en ;
+	skos:broader ubvuv:IllustratedPage ;
 	skos:inScheme ubvuv:UBVUConceptScheme .
 
 ubvuv:MultipleIllustrationsPage
@@ -48,6 +52,7 @@ ubvuv:MultipleIllustrationsPage
 	skos:prefLabel "Multiple illustrations on page"@en ;
 	skos:definition "Pagina met meerdere illustraties"@nl ;
 	skos:definition "Page with multiple illustrations"@en ;
+	skos:broader ubvuv:IllustratedPage ;
 	skos:inScheme ubvuv:UBVUConceptScheme .
 
 ubvuv:PartialIllustrationPage
@@ -56,6 +61,7 @@ ubvuv:PartialIllustrationPage
 	skos:prefLabel "Partial illustration on page"@en ;
 	skos:definition "Pagina met een deel van een illustratie die is afgedrukt op meerdere pagina’s"@nl ;
 	skos:definition "Page that contains part of an illustration that is printed on more than one page"@en ;
+	skos:broader ubvuv:IllustratedPage ;
 	skos:inScheme ubvuv:UBVUConceptScheme .
 
 ubvuv:TextAndIllustrationPage
@@ -64,14 +70,17 @@ ubvuv:TextAndIllustrationPage
 	skos:prefLabel "Small illustrations and text on page"@en ;
 	skos:definition "Pagina met tekst en kleine illustraties"@nl ;
 	skos:definition "Page that contains both text and small illustrations"@en ;
+	skos:broader ubvuv:IllustratedPage ;
+	skos:broader ubvuv:TextPage ;
 	skos:inScheme ubvuv:UBVUConceptScheme .
 
-ubvuv:MiniatureAndTextPage
+ubvuv:IlluminatedCapitalsAndTextPage
 	a skos:Concept ;
 	skos:prefLabel "Miniaturen en tekst op pagina"@nl ;
 	skos:prefLabel "Illuminated capitals and text on page"@en ;
 	skos:definition "Pagina met tekst en miniaturen"@nl ;
 	skos:definition "Page that contains both text and illuminated capitals"@en ;
+	skos:broader ubvuv:TextPage ;
 	skos:inScheme ubvuv:UBVUConceptScheme .
 
 ubvuv:OnlyTextPage
@@ -80,4 +89,5 @@ ubvuv:OnlyTextPage
 	skos:prefLabel "Only text on page"@en ;
 	skos:definition "Pagina met enkel tekst"@nl ;
 	skos:definition "Page that contains exclusively text"@en ;
+	skos:broader ubvuv:TextPage ;
 	skos:inScheme ubvuv:UBVUConceptScheme .
