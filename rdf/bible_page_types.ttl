@@ -8,7 +8,7 @@ ubvuv:Page
 	skos:prefLabel "Page"@en ;
 	skos:definition "Pagina"@nl ;
 	skos:definition "Page"@en ;
-	skos:inScheme ubvuv:UBVUConceptScheme .
+	skos:inScheme ubvuv:BiblePageConceptScheme .
 
 ubvuv:IllustratedPage
 	a skos:Concept ;
@@ -17,7 +17,7 @@ ubvuv:IllustratedPage
 	skos:definition "Pagina met daarop illustraties"@nl ;
 	skos:definition "Pages that contain illustrations"@en ;
 	skos:broader ubvuv:Page ;
-	skos:inScheme ubvuv:UBVUConceptScheme .
+	skos:inScheme ubvuv:BiblePageConceptScheme .
 
 ubvuv:TextPage
 	a skos:Concept ;
@@ -26,7 +26,7 @@ ubvuv:TextPage
 	skos:definition "Pagina met tekst"@nl ;
 	skos:definition "Page that contains text"@en ;
 	skos:broader ubvuv:Page ;
-	skos:inScheme ubvuv:UBVUConceptScheme .
+	skos:inScheme ubvuv:BiblePageConceptScheme .
 
 ubvuv:EmptyPage
 	a skos:Concept ;
@@ -35,7 +35,7 @@ ubvuv:EmptyPage
 	skos:definition "Pagina zonder illustraties of tekst"@nl ;
 	skos:definition "Page that contains illustrations nor text"@en ;
 	skos:broader ubvuv:Page ;
-	skos:inScheme ubvuv:UBVUConceptScheme .
+	skos:inScheme ubvuv:BiblePageConceptScheme .
 
 ubvuv:FullPageIllustration
 	a skos:Concept ;
@@ -44,7 +44,7 @@ ubvuv:FullPageIllustration
 	skos:definition "Paginavullende illustratie"@nl ;
 	skos:definition "Full page illustration"@en ;
 	skos:broader ubvuv:IllustratedPage ;
-	skos:inScheme ubvuv:UBVUConceptScheme .
+	skos:inScheme ubvuv:BiblePageConceptScheme .
 
 ubvuv:MultipleIllustrationsPage
 	a skos:Concept ;
@@ -53,7 +53,7 @@ ubvuv:MultipleIllustrationsPage
 	skos:definition "Pagina met meerdere illustraties"@nl ;
 	skos:definition "Page with multiple illustrations"@en ;
 	skos:broader ubvuv:IllustratedPage ;
-	skos:inScheme ubvuv:UBVUConceptScheme .
+	skos:inScheme ubvuv:BiblePageConceptScheme .
 
 ubvuv:PartialIllustrationPage
 	a skos:Concept ;
@@ -62,7 +62,7 @@ ubvuv:PartialIllustrationPage
 	skos:definition "Pagina met een deel van een illustratie die is afgedrukt op meerdere pagina’s"@nl ;
 	skos:definition "Page that contains part of an illustration that is printed on more than one page"@en ;
 	skos:broader ubvuv:IllustratedPage ;
-	skos:inScheme ubvuv:UBVUConceptScheme .
+	skos:inScheme ubvuv:BiblePageConceptScheme .
 
 ubvuv:TextAndIllustrationPage
 	a skos:Concept ;
@@ -72,7 +72,7 @@ ubvuv:TextAndIllustrationPage
 	skos:definition "Page that contains both text and small illustrations"@en ;
 	skos:broader ubvuv:IllustratedPage ;
 	skos:broader ubvuv:TextPage ;
-	skos:inScheme ubvuv:UBVUConceptScheme .
+	skos:inScheme ubvuv:BiblePageConceptScheme .
 
 ubvuv:IlluminatedCapitalsAndTextPage
 	a skos:Concept ;
@@ -81,7 +81,7 @@ ubvuv:IlluminatedCapitalsAndTextPage
 	skos:definition "Pagina met tekst en miniaturen"@nl ;
 	skos:definition "Page that contains both text and illuminated capitals"@en ;
 	skos:broader ubvuv:TextPage ;
-	skos:inScheme ubvuv:UBVUConceptScheme .
+	skos:inScheme ubvuv:BiblePageConceptScheme .
 
 ubvuv:OnlyTextPage
 	a skos:Concept ;
@@ -90,4 +90,9 @@ ubvuv:OnlyTextPage
 	skos:definition "Pagina met enkel tekst"@nl ;
 	skos:definition "Page that contains exclusively text"@en ;
 	skos:broader ubvuv:TextPage ;
-	skos:inScheme ubvuv:UBVUConceptScheme .
+	skos:inScheme ubvuv:BiblePageConceptScheme .
+
+ubvuv:BiblePageConceptScheme
+	a skos:ConceptScheme ;
+	skos:prefLabel "Concept scheme van soorten bijbel paginas"@nl ;
+	skos:prefLabel "Concept scheme of the bible page types"@en .
