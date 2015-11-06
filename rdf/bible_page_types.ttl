@@ -33,7 +33,7 @@ ubvuv:EmptyPage
 	skos:prefLabel "Lege pagina"@nl ;
 	skos:prefLabel "Empty page"@en ;
 	skos:definition "Pagina zonder illustraties of tekst"@nl ;
-	skos:definition "Page that contains illustrations nor text"@en ;
+	skos:definition "Page that contains neither illustrations nor text"@en ;
 	skos:broader ubvuv:Page ;
 	skos:inScheme ubvuv:BiblePageConceptScheme .
 
