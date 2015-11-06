@@ -23,3 +23,10 @@
 	dcterms:title "EDM dataset of two UBVU bibles." ;
 	void:dataDump
 		<ubvu_bibles.ttl> .
+
+<UBVU-bible-page-types>
+	a void:Dataset ;
+	lib:source <http://purl.org/vocab/nl/ubvu/> ;
+	dcterms:title "Page types of bibles modeled in SKOS. " ;
+	void:dataDump
+		<bible_page_types.ttl> .
