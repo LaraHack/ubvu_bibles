@@ -1,0 +1,31 @@
+@prefix   rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ubvuv: <http://purl.org/vocab/nl/ubvu/> .
+@prefix  skos: <http://www.w3.org/2004/02/skos/core#> .
+
+ubvuv:Page
+	a skos:Concept ;
+	skos:prefLabel "Pagina"@nl ;
+	skos:prefLabel "Page"@en ;
+	skos:note "Pagina, top concept"@nl ;
+	skos:inScheme ubvuv:UBVUConceptScheme .
+
+ubvuv:IllustratedPage
+	a skos:Concept ;
+	skos:prefLabel "Geïllustreerde pagina"@nl ;
+	skos:prefLabel "Illustrated page"@en ;
+	skos:note "Pagina met daarop een illustratie"@nl ;
+	skos:inScheme ubvuv:UBVUConceptScheme .
+
+ubvuv:TextPage
+	a skos:Concept ;
+	skos:prefLabel "Pagina met text"@nl ;
+	skos:prefLabel "Page with text"@en ;
+	skos:note "Pagina met tekst"@nl ;
+	skos:inScheme ubvuv:UBVUConceptScheme .
+
+ubvuv:EmptyPage
+	a skos:Concept ;
+	skos:prefLabel "Lege pagina"@nl ;
+	skos:prefLabel "Empty page"@en ;
+	skos:note "Lege pagina"@nl ;
+	skos:inScheme ubvuv:UBVUConceptScheme .
