@@ -31,7 +31,7 @@ ubvuv:TextPage
 ubvuv:EmptyPage
 	a skos:Concept ;
 	skos:prefLabel "Lege pagina"@nl ;
-	skos:prefLabel "Empty page"@en ;
+	skos:prefLabel "Blank page"@en ;
 	skos:definition "Pagina zonder illustraties of tekst"@nl ;
 	skos:definition "Page that contains neither illustrations nor text"@en ;
 	skos:broader ubvuv:Page ;
